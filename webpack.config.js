@@ -11,12 +11,29 @@ if (process.env.NODE_ENV === "production") {
 module.exports = {
     mode: mode,
     target: target,
+    output: {
+        assetModuleFilename: "images/[hash][ext][query]"
+    },
     module: {
         rules: [
             {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                type: "asset", // asset = inline+resource, asset/inline = base64, resource = file
+                // parser: { // 篩選尺寸
+                //     dataUrlCondition: {
+                //         maxSize: 30 * 1024
+                //     }
+                // }
+            },
+            {
                 test: /\.(s[ac]|c)ss$/i,
                 use: [
-                    MiniCssExtractPLugin.loader,
+                    {
+                        loader: MiniCssExtractPLugin.loader,
+                        options: {
+                            publicPath: ""
+                        }
+                    },
                     "css-loader",
                     "postcss-loader",
                     "sass-loader"
@@ -47,4 +64,4 @@ module.exports = {
         port: 8080,
         hot: true
     },
-};
+}

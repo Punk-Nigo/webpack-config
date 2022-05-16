@@ -1,5 +1,3 @@
-const { runtime } = require("webpack");
-
 module.exports = {
     presets: [
         "@babel/preset-env",
